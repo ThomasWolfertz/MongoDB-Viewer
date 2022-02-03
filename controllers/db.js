@@ -2,8 +2,8 @@
 
 const MongoClient = require('mongodb').MongoClient;
 
-let url = "mongodb://localhost:27017";     ///?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false";
-                    // mongodb://localhost:27017
+let url = "mongodb://localhost:27017";    
+
 let client = null;
 let databasename = null;
 let collectionname = null;
@@ -36,9 +36,9 @@ const getDocumentList = (dbname, colname, callback) => {
     client = get();
     let doccount = 0;
     // count ALL documents for client-side paging (future feature)
-    client.db("testdb").collection("nutzer").count(function(err, count) {
+    client.db(dbname).collection(colname).count(function(err, count) {
         doccount = count;
-        client.db("testdb").collection("nutzer").find({},{limit:50}).toArray(function(err, docs) {
+        client.db(dbname).collection(colname).find({},{limit:50}).toArray(function(err, docs) {
             docs.doccount = doccount;
             callback(undefined, docs);
         });
@@ -88,7 +88,6 @@ function getURL() {
 
 function getDatabasename() {
     if (client) {
-        //return (client.s.namespace.db);
         return databasename;
     } else
         return "";

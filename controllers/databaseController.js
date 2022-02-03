@@ -11,7 +11,7 @@ const document_list = (req,res) => {
     let collectionname = req.params.collectionname;
     let displaymodus = req.params.displaymodus;
     req.params.dbname = DB.getDatabasename();
-    DB.getDocumentList("", "", (err, data) => {
+    DB.getDocumentList(req.params.dbname, collectionname, (err, data) => {
         res.render('documentlist', {databasename: req.params.dbname, collectionname:collectionname, displaymodus:displaymodus, list:data});
     });
 }
@@ -39,9 +39,6 @@ const collection_drop = (req, res) => {
 const database_savesettings = (req, res) => {
     const dburl = req.body.dburl;
     DB.setURL(dburl, (err, data) => {
-        /*DB.getDatabases((err, data) => {
-            res.render('databaselist', { list:data});
-        });*/
         database_list(undefined, res);
     })
 }
