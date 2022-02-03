@@ -1,0 +1,29 @@
+<html lang="en">
+<%- include("./partials/head.ejs") %>
+
+<body>
+  <div class="main">
+    <%- include("./partials/nav.ejs") %>
+
+    <div>
+      <h2>all databases</h2>
+
+      <% if (list && (list.length > 0)) { %>
+        <% list.forEach(database => { %>
+          <div class="single">
+              <input disabled type="text" value="<%= database.name %>" />
+              <a href="/database/collectionlist/<%= database.name %>">show collections</a>
+              <a href="">drop</a>
+          </div>
+          <div class="clearboth"></div>
+        <% }) %>
+      <% } else { %>
+        <p>There are no databases to display or you have to input your database url in settings.</p>
+      <% } %>
+      
+    </div>
+
+    <%- include("./partials/footer.ejs") %>
+  </div>
+</body>
+</html>

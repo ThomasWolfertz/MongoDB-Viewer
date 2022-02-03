@@ -1,0 +1,34 @@
+<html lang="en">
+<%- include("./partials/head.ejs") %>
+
+<body>
+  
+  <div class="main">
+    <%- include("./partials/nav.ejs") %>
+    <div>
+      <div class="single">
+        <h2 class="floatleft">all collections / database: <%= dbname %></h2>
+        <a class="floatleft" href="/database/collectionlist/<%= dbname %>">refresh</a>
+      </div>
+      <div style="clear:both;"></div>
+
+      <% if (list.length > 0) { %>
+        <% list.forEach(collection => { %>
+          <div class="single">
+              <input  type="text" value="<%= collection %>" />
+              <a href="/database/documentlist/<%= collection %>/list">show documents</a>
+              <a href="/database/collectiondrop/<%= collection %>" onclick="return confirmAction()">drop</a>
+          </div>
+          <div class="clearboth"></div>
+        <% }) %>
+      <% } else { %>
+        <p>This database has no collections. Try to "refresh" or create a collection.</p>
+      <% } %>
+      
+    </div>
+
+    <%- include("./partials/footer.ejs") %>
+  </div>
+
+</body>
+</html>

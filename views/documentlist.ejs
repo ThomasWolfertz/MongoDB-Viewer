@@ -1,0 +1,64 @@
+<html lang="en">
+<%- include("./partials/head.ejs") %>
+
+<body>
+  
+  <div class="main">
+    <%- include("./partials/nav.ejs") %>
+    <div>
+      <div class="single">
+        <h2 class="floatleft">all documents
+          <a href="/database/collectionlist/<%= databasename %>" title="back to collection list" >database: <%= databasename %></a>
+          / collection: <%= collectionname %></h2>
+        <a class="floatleft" href="/database/collectionlist/">refresh</a>
+        <div class="floatleft" style="padding:3px;margin-left:30px;background-color:#6781a8">display as:
+          <a href="/database/documentlist/<%= collectionname %>/list">list</a>
+          <a href="/database/documentlist/<%= collectionname %>/object">object</a>
+        </div>
+        <div style="clear:both;"></div>
+      </div>
+      <div style="clear:both;"></div>
+
+      <% if (list.length > 0) { %>
+        <% if (displaymodus == "object") { %>
+            <% list.forEach(document => { %>
+                <div class="displaymodusobject">
+                <% Object.keys(document).forEach(function(prop) { %>
+                    <div class="displaymodusobjectelt"><%- prop %></div>
+                    <input id="<%- prop %>" value="<%-document[prop] %>">
+                    <div class="clearboth"></div>
+                <% }); %>
+                </div>
+            <% }); %>
+            <div class="clearboth"></div>
+        <% } else { %>
+            <section>
+                <header>
+                    <% let doc = list[0]; %>
+                    <% Object.keys(doc).forEach(function(prop) { %>
+                        <div class="col"><%- prop %></div>
+                    <% }) %>
+                </header>
+                <% list.forEach(document => { %>
+                    <div class="row">
+                    <% Object.keys(document).forEach(function(prop) { %>
+                        <div class="col">
+                        <%-document[prop] %>
+                        </div>
+                    <% }); %>
+                    </div>
+                <% }) %>
+            </section>
+        <% } %>
+          total number of documents <%- list.doccount %>
+        <% } else { %>
+        <p>This collection has no documents. Try to "refresh" or create some documents.</p>
+      <% } %>
+      
+    </div>
+
+    <%- include("./partials/footer.ejs") %>
+  </div>
+
+</body>
+</html>
