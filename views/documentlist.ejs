@@ -8,19 +8,28 @@
     <div>
       <div class="single">
         <h2 class="floatleft">all documents
-          <a href="/database/collectionlist/<%= databasename %>" title="back to collection list" >database: <%= databasename %></a>
-          / collection: <%= collectionname %></h2>
-        <a class="floatleft" href="/database/collectionlist/">refresh</a>
-        <div class="floatleft" style="padding:3px;margin-left:30px;background-color:#6781a8">display as:
-          <a href="/database/documentlist/<%= collectionname %>/list">list</a>
-          <a href="/database/documentlist/<%= collectionname %>/object">object</a>
-        </div>
-        <div style="clear:both;"></div>
-      </div>
+          <a href="/database/collectionlist/<%= params.databasename %>" title="back to collection list" >database: <%- params.databasename %></a>
+          / collection: <%= params.collectionname %></h2>
+          <form method="post" action="/database/documentlist/<%= params.collectionname %>">
+            <div class="pack">
+              <div class="floatleft">display as:</div>
+              <input type="radio" 
+                <% if (params.displaymodus == 'list') { %>checked<% } %> name="displaymodus" id="displaylist" value="list"><label for="displaylist">list</label>
+              <input type="radio" 
+                <% if (params.displaymodus == 'object') { %>checked<% } %> name="displaymodus" id="displayobject" value="object"><label for="displayobject">object</label>
+            </div>
+            
+            <div class="pack">
+              <div class="floatleft">filter</div>
+              <input class="floatleft" style="width:400px;" name="filter" id="filter" value=<%= JSON.stringify(params.filter) %>>
+            </div>
+            <a onclick="this.closest('form').submit();return false;" href="">refresh</a>
+          </form>
+    </div>
       <div style="clear:both;"></div>
 
       <% if (list.length > 0) { %>
-        <% if (displaymodus == "object") { %>
+        <% if (params.displaymodus == "object") { %>
             <% list.forEach(document => { %>
                 <div class="displaymodusobject">
                 <% Object.keys(document).forEach(function(prop) { %>
