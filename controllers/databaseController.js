@@ -7,13 +7,32 @@ const collection_list = (req, res) => {
     })
 }
 
-const document_list = (req,res) => {
-    let collectionname = req.params.collectionname;
-    let displaymodus = req.params.displaymodus;
+const document_list = (req, res) => {
     req.params.dbname = DB.getDatabasename();
-    DB.getDocumentList(req.params.dbname, collectionname, (err, data) => {
-        res.render('documentlist', {databasename: req.params.dbname, collectionname:collectionname, displaymodus:displaymodus, list:data});
+    const params = {
+        'filter': toJSON(req.body['filter']),
+        'databasename': req.params.dbname,
+        'collectionname': req.params.collectionname,
+        'displaymodus': orDefault(req.body['displaymodus'], 'list')
+    };
+    console.log("Params:", params);
+    DB.getDocumentList(params, (err, data) => {
+        res.render('documentlist', {params:params, list:data});
     });
+}
+
+function orDefault(value, defaultvalue) {
+    if (!value)
+        return defaultvalue;
+    else
+        return value;
+}
+
+function toJSON(obj) {
+    if (!obj)
+        return {};
+    else
+        return JSON.parse(obj.replace("'", ""));
 }
 
 const database_list = (req, res) => {

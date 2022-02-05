@@ -32,13 +32,13 @@ const setURL = (dburl, callback) => {
     callback(undefined, undefined);
 };
 
-const getDocumentList = (dbname, colname, callback) => {
+const getDocumentList = (params, callback) => {
     client = get();
     let doccount = 0;
     // count ALL documents for client-side paging (future feature)
-    client.db(dbname).collection(colname).count(function(err, count) {
+    client.db(params.databasename).collection(params.collectionname).count(params.filter, function(err, count) {
         doccount = count;
-        client.db(dbname).collection(colname).find({},{limit:50}).toArray(function(err, docs) {
+        client.db(params.databasename).collection(params.collectionname).find(params.filter, {limit:50}).toArray(function(err, docs) {
             docs.doccount = doccount;
             callback(undefined, docs);
         });

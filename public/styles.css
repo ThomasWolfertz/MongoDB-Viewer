@@ -44,6 +44,14 @@
       text-align: right;vertical-align: center; padding-right:5px;width:120px;float:left;
     }
 
+    .pack {
+      padding:3px;
+      margin-left:30px;
+      background-color:#6781a8;
+      /*display:inline-block;*/
+      float:left;
+    }
+
     header {
       font-weight: bold;
     }
