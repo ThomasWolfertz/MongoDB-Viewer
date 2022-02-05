@@ -9,3 +9,5 @@ This node.js project shows you how to
   - get and list all documents
   - drop collections
   - store values temporarily on the server side
+  - filter the document view
+ 
