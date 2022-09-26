@@ -61,7 +61,7 @@ const getCollections = (dbname, callback) => {
 const dropCollection = (collectionname, callback) => {
     client = get();
     const connect = client.db(databasename);
-    console.log("ich droppe ", collectionname, " in der Datenbank ", databasename);
+    console.log("ich droppe [", collectionname, "] in der Datenbank [", databasename, "]");
     connect.dropCollection(collectionname, function(err,res) {
         callback(undefined, "ok");
     });
